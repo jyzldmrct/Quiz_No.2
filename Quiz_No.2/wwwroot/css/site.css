@@ -1,0 +1,168 @@
+html {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@font-face {
+    font-family: 'champagne';
+    src: url('file:///C:/Users/Jayzel/Downloads/champagne_limousines/champagne.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'BIG_NOODLE_TITLING';
+    src: url('file:///C:/USERS/JAYZEL/APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/BIG_NOODLE_TITLING.TTF') format('truetype');
+}
+
+header {
+    background-color: green;
+    text-align: center;
+    font-size: 30px;
+    width: 100%; 
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    z-index: 1000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 40px;
+    background: linear-gradient(to right,#c2eeff, #c2ffce );
+}
+
+h1 {
+    font-size: 40px;
+    font-family: designer;
+    color: navy;
+}
+
+button, #submitAnswer {
+    display: block; 
+    margin: 20px auto; 
+    padding: 10px 10px;
+    background-color: lawngreen;
+    color: navy;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    border-radius: 10px;
+    font-family: designer;
+    color: blue;
+    margin-bottom: 0;
+    border: 3px solid navy;
+}
+
+    button:hover, #submitAnswer:hover {
+        background-color: navy;
+        color: lawngreen;
+        border: 2px solid black;
+    }
+
+form {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    justify-content: center;
+}
+
+#feedback {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.text {
+    font-size: 25px;
+    font-family: 'Trebuchet MS';
+    color: darkblue;
+    margin-top: 200px;
+    margin-bottom: 150px;
+}
+
+.question {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 20px;
+    font-family:designer;
+}
+
+.answer-label {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: navy;
+    font-family: 'Trebuchet MS';
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+#feedback {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#submitAnswer {
+    margin-top: 20px;
+}
+
+.quiz-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: 18px;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    border: 5px solid black;
+    border-radius: 15px;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+
+    .quiz-table h2 {
+        font-size: 24px;
+        color: navy;
+        margin-bottom: 20px;
+    }
+
+    .quiz-table td, .quiz-table th {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 15px;
+    }
+
+#quizSection {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh; 
+    flex-direction: column;
+}
+
+
+
+    

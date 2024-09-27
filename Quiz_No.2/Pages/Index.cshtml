@@ -1,0 +1,219 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Quiz Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            background-color: white;
+        }
+
+        header {
+            background-color: lawngreen;
+            margin: 0;
+            text-align: center;
+            font-size: 30px;
+            width: 100%;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #landing {
+            text-align: center;
+        }
+
+        #quizSection {
+            display: none;
+        }
+
+        .progress {
+            width: 100%;
+            height: 30px;
+            background-color: lightgray;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            overflow: hidden; 
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%; 
+            transition: width 0.5s; 
+        }
+
+        .correct {
+            background-color: green;
+        }
+
+        .incorrect {
+            background-color: red;
+        }
+
+        .quiz-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0;
+            font-size: 18px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 50px;
+            border: 5px solid black;
+            border-radius: 15px;
+            border-spacing: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to your Effing Quiz</h1>
+    </header>
+    <main>
+        <section id="landing">
+            <p class="text">Test your basic web development knowledge by answering 5 questions. Click below to start!</p>
+            <button id="startQuiz">Start Quiz</button>
+        </section>
+        <section id="quizSection">
+            <div class="progress">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <form id="quizForm"></form>
+            <div id="feedback"></div>
+            <button id="restart" style="display:none;">Restart Quiz</button>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const quizData = [
+                {
+                    question: "What does HTML stand for?",
+                    answers: ["Hyper Text Markup Language", "Hot Mail", "How to Make Lasagna", "Home Tool Markup Language"],
+                    correct: 0
+                },
+                {
+                    question: "What does CSS stand for?",
+                    answers: ["Cascading Style Sheets", "Colorful Style Sheets", "Computer Style Sheets", "Creative Style Sheets"],
+                    correct: 0
+                },
+                {
+                    question: "Which language is used for web apps?",
+                    answers: ["PHP", "Python", "JavaScript", "All of the above"],
+                    correct: 3
+                },
+                {
+                    question: "Which is not a JavaScript framework?",
+                    answers: ["React", "Vue", "Angular", "Django"],
+                    correct: 3
+                },
+                {
+                    question: "What year was JavaScript created?",
+                    answers: ["1990", "1995", "2000", "2005"],
+                    correct: 1
+                }
+            ];
+
+            let currentQuestion = 0;
+            let score = 0;
+
+            function loadQuestion() {
+                $('#quizForm').html(`
+                <table class="quiz-table">
+                    <tr>
+                        <td colspan="2"><h2 class="question">${quizData[currentQuestion].question}</h2></td>
+                    </tr>
+                    ${quizData[currentQuestion].answers.map((answer, index) => `
+                    <tr>
+                        <td><label class="answer-label"><input type="radio" name="answer" value="${index}"> ${answer}</label></td>
+                    </tr>
+                    `).join('')}
+                </table>
+                <button id="submitAnswer" style="margin-top: 20px;">Submit Answer</button>
+            `);
+            }
+
+            function updateProgressBar() {
+                const progressPercent = (currentQuestion / quizData.length) * 100;
+                $('#progressBar').css('width', `${progressPercent}%`);
+            }
+
+            $('#startQuiz').click(function () {
+                $('#landing').hide();
+                $('#quizSection').show();
+                loadQuestion();
+                updateProgressBar(); 
+            });
+
+            $(document).on('click', '#submitAnswer', function (e) {
+                e.preventDefault();
+                const selectedAnswer = $('input[name="answer"]:checked').val();
+                if (selectedAnswer === undefined) {
+                    alert('Please select an answer!');
+                } else {
+                    if (selectedAnswer == quizData[currentQuestion].correct) {
+                        $('#feedback').text('Correct!').css('color', 'green');
+                        score++;
+                        $('#progressBar').css('background-color', 'green'); 
+                    } else {
+                        $('#feedback').text('Incorrect!').css('color', 'red');
+                        $('#progressBar').css('background-color', 'red');
+                    }
+
+                    currentQuestion++;
+                    updateProgressBar();
+                    if (currentQuestion < quizData.length) {
+                        setTimeout(() => {
+                            $('#feedback').text('');
+                            loadQuestion();
+                        }, 1000);
+                    } else {
+                        setTimeout(() => {
+                            $('#feedback').html(`Quiz Over! You scored ${score} out of ${quizData.length}.`);
+                            $('#quizForm').html(''); 
+                            $('#progressBar').hide(); 
+                            $('#restart').show();
+                        }, 1000);
+                    }
+                }
+            });
+
+            $('#restart').click(function () {
+                currentQuestion = 0;
+                score = 0;
+                $('#feedback').text('');
+                $(this).hide();
+                $('#progressBar').css('width', '0%'); 
+                $('#progressBar').css('background-color', 'lightgray'); 
+                $('#progressBar').show(); 
+                loadQuestion();
+            });
+        });
+
+    </script>
+</body>
+</html>
