@@ -1,5 +1,5 @@
 html {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 16px;
     text-align: center;
     margin: 0;
@@ -12,51 +12,60 @@ html {
     }
 }
 
-@font-face {
-    font-family: 'champagne';
-    src: url('file:///C:/Users/Jayzel/Downloads/champagne_limousines/champagne.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'BIG_NOODLE_TITLING';
-    src: url('file:///C:/USERS/JAYZEL/APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/BIG_NOODLE_TITLING.TTF') format('truetype');
+body {
+    margin-bottom: 40px;
+    background: linear-gradient(to right,#c2eeff, #c2ffce);
 }
 
 header {
-    background-color: green;
+    background-color: lawngreen;
     text-align: center;
     font-size: 30px;
-    width: 100%; 
-    position: fixed; 
-    top: 0; 
+    width: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
-    z-index: 1000; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+#quizSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding-top: 60px; /* Ensure content doesn't hide under fixed header */
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+.progress {
+    width: 100%;
+    height: 30px;
+    background-color: lightgray;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    overflow: hidden;
 }
 
-body {
-    margin-bottom: 40px;
-    background: linear-gradient(to right,#c2eeff, #c2ffce );
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: lawngreen; /* Set a visible color */
+    transition: width 0.5s;
 }
 
-h1 {
-    font-size: 40px;
-    font-family: designer;
-    color: navy;
+.text {
+    font-size: 25px;
+    font-family: 'Trebuchet MS';
+    color: darkblue;
+    margin-top: 200px; /* Adjust as necessary */
+    margin-bottom: 150px; /* Adjust as necessary */
 }
 
 button, #submitAnswer {
-    display: block; 
-    margin: 20px auto; 
+    display: block;
+    margin: 20px auto;
     padding: 10px 10px;
     background-color: lawngreen;
     color: navy;
@@ -65,8 +74,6 @@ button, #submitAnswer {
     width: 200px;
     border-radius: 10px;
     font-family: designer;
-    color: blue;
-    margin-bottom: 0;
     border: 3px solid navy;
 }
 
@@ -95,6 +102,11 @@ form {
     color: darkblue;
     margin-top: 200px;
     margin-bottom: 150px;
+}
+
+h1 {
+    font-family: designer;
+    color: navy;
 }
 
 .question {

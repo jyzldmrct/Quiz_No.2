@@ -25,14 +25,6 @@
             background-color: white;
         }
 
-        header {
-            background-color: lawngreen;
-            margin: 0;
-            text-align: center;
-            font-size: 30px;
-            width: 100%;
-        }
-
         main {
             flex: 1;
             display: flex;
@@ -47,6 +39,7 @@
 
         #quizSection {
             display: none;
+            width: 100%;
         }
 
         .progress {
@@ -54,15 +47,15 @@
             height: 30px;
             background-color: lightgray;
             border-radius: 10px;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            overflow: hidden; 
+            margin: 20px 0;
+            overflow: hidden;
         }
 
         .progress-bar {
             height: 100%;
-            width: 0%; 
-            transition: width 0.5s; 
+            width: 0%;
+            background-color: lawngreen;
+            transition: width 0.5s;
         }
 
         .correct {
@@ -76,17 +69,20 @@
         .quiz-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 0;
             font-size: 18px;
             text-align: center;
-            justify-content: center;
-            margin-bottom: 50px;
+            margin: 0 auto 50px;
             border: 5px solid black;
             border-radius: 15px;
-            border-spacing: 0;
             overflow: hidden;
         }
 
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -140,33 +136,39 @@
 
             let currentQuestion = 0;
             let score = 0;
+            let progressColors = [];
 
             function loadQuestion() {
                 $('#quizForm').html(`
-                <table class="quiz-table">
-                    <tr>
-                        <td colspan="2"><h2 class="question">${quizData[currentQuestion].question}</h2></td>
-                    </tr>
-                    ${quizData[currentQuestion].answers.map((answer, index) => `
-                    <tr>
-                        <td><label class="answer-label"><input type="radio" name="answer" value="${index}"> ${answer}</label></td>
-                    </tr>
-                    `).join('')}
-                </table>
-                <button id="submitAnswer" style="margin-top: 20px;">Submit Answer</button>
-            `);
+                    <table class="quiz-table">
+                        <tr>
+                            <td colspan="2"><h2 class="question">${quizData[currentQuestion].question}</h2></td>
+                        </tr>
+                        ${quizData[currentQuestion].answers.map((answer, index) => `
+                        <tr>
+                            <td><label class="answer-label"><input type="radio" name="answer" value="${index}"> ${answer}</label></td>
+                        </tr>
+                        `).join('')}
+                    </table>
+                    <button id="submitAnswer">Submit Answer</button>
+                `);
             }
 
             function updateProgressBar() {
                 const progressPercent = (currentQuestion / quizData.length) * 100;
+                const gradientColors = progressColors.join(', ');
                 $('#progressBar').css('width', `${progressPercent}%`);
+                $('#progressBar').css('background', `linear-gradient(to right, ${gradientColors})`);
             }
 
             $('#startQuiz').click(function () {
                 $('#landing').hide();
                 $('#quizSection').show();
+                currentQuestion = 0; // Reset current question
+                score = 0; // Reset score
+                progressColors = []; // Reset progress colors
+                $('#progressBar').css('width', '0%'); // Initialize progress bar to 0%
                 loadQuestion();
-                updateProgressBar(); 
             });
 
             $(document).on('click', '#submitAnswer', function (e) {
@@ -175,13 +177,14 @@
                 if (selectedAnswer === undefined) {
                     alert('Please select an answer!');
                 } else {
-                    if (selectedAnswer == quizData[currentQuestion].correct) {
+                    const isCorrect = selectedAnswer == quizData[currentQuestion].correct;
+                    if (isCorrect) {
                         $('#feedback').text('Correct!').css('color', 'green');
                         score++;
-                        $('#progressBar').css('background-color', 'green'); 
+                        progressColors.push('lawngreen');
                     } else {
                         $('#feedback').text('Incorrect!').css('color', 'red');
-                        $('#progressBar').css('background-color', 'red');
+                        progressColors.push('red');
                     }
 
                     currentQuestion++;
@@ -194,8 +197,8 @@
                     } else {
                         setTimeout(() => {
                             $('#feedback').html(`Quiz Over! You scored ${score} out of ${quizData.length}.`);
-                            $('#quizForm').html(''); 
-                            $('#progressBar').hide(); 
+                            $('#quizForm').html('');
+                            $('#progressBar').hide();
                             $('#restart').show();
                         }, 1000);
                     }
@@ -205,15 +208,19 @@
             $('#restart').click(function () {
                 currentQuestion = 0;
                 score = 0;
+                progressColors = [];
                 $('#feedback').text('');
                 $(this).hide();
-                $('#progressBar').css('width', '0%'); 
-                $('#progressBar').css('background-color', 'lightgray'); 
-                $('#progressBar').show(); 
+                $('#progressBar').css('width', '0%').css('background', 'lightgray');
+                $('#progressBar').show();
                 loadQuestion();
             });
         });
 
+    
     </script>
+
+ 
+ 
 </body>
 </html>
